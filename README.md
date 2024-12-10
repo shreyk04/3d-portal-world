@@ -9,4 +9,3 @@ yarn dev<img width="821" alt="3d-portal-world" src="https://github.com/user-atta
 
 
 
-<img width="821" alt="3d-portal-world" src="https://github.com/user-attachments/assets/bcfbe466-e29c-4ea4-bbda-6a38544e8d7c">
