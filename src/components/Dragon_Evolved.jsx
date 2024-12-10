@@ -8,7 +8,7 @@ import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 
-export function Dragon_Evolved(props) {
+export function Dragon_Evolved({ hovered, ...props }) {
 
 
   const group = React.useRef()
@@ -18,10 +18,16 @@ export function Dragon_Evolved(props) {
   const { actions } = useAnimations(animations, group)
 
 
-  // useEffect(()=>{
-  //   actions['Idle'].reset().fadeIn(0.5).play();
-  //   return()=>actions['Idle'].fadeOut(0.5)
-  // },[])
+  useEffect(() => {
+    const anim = hovered ? 'Wave' : 'Idle';
+    const action = actions[anim];
+
+    if (action) {
+      action.reset().fadeIn(0.5).play();
+      return () => action.fadeOut(0.5); // Cleanup
+    }
+  }, [hovered, actions]);
+
 
 
   return (

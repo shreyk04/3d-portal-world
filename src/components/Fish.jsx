@@ -8,21 +8,24 @@ import { useGraph } from '@react-three/fiber'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 
-export function Fish(props) {
+export function Fish({hovered,...props}) {
   const group = React.useRef()
+
   const { scene, animations } = useGLTF('/models/Fish.gltf')
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
   const { nodes, materials } = useGraph(clone)
   const { actions } = useAnimations(animations, group)
 
 
-  useEffect(()=>{
-    actions['Idle'].reset().fadeIn(0.5).play();
-    return()=>actions['Idle'].fadeOut(0.5)
-  },[])
+  useEffect(() => {
+  const anim = hovered ? 'Wave' : 'Idle';
+  const action = actions[anim];
 
-
-
+  if (action) {
+    action.reset().fadeIn(0.5).play();
+    return () => action.fadeOut(0.5); // Cleanup
+  }
+}, [hovered, actions]);
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
