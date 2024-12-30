@@ -26,6 +26,9 @@ export function Fish({hovered,...props}) {
     return () => action.fadeOut(0.5); // Cleanup
   }
 }, [hovered, actions]);
+
+
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">

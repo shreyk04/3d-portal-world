@@ -1,10 +1,9 @@
 import { CameraControls, Environment, MeshPortalMaterial, OrbitControls, RoundedBox, useTexture } from "@react-three/drei";
-import { MeshStandardMaterial } from "three";
 import * as THREE from 'three'
 import { Fish } from "./Fish";
 import { Cactoro } from "./Cactoro";
 import { Dragon_Evolved } from "./Dragon_Evolved";
-import { act, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { easing } from "maath";
 
@@ -34,27 +33,26 @@ export const Experience = () => {
   return (
     <>
       <ambientLight intensity={0.5} />
-      <Environment preset="sunset" />
-      {/* <OrbitControls /> */}
+
+      <Environment preset="sunset"/>
       <CameraControls ref={controlsRef} />
 
-      <MonsterStage texture={'./textures/M3_Photoreal_equirectangular-png_Mid_surface_view_looking_796725697_12612724.png'} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='fish'>
+      <MonsterStage id='01' texture={'./textures/M3_Photoreal_equirectangular-png_Mid_surface_view_looking_796725697_12612724.png'} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='fish'>
 
         <Fish scale={0.6} position-y={-1} hovered={hovered === 'fish'} />
       </MonsterStage>
 
 
-      <MonsterStage texture={'./textures/M3_Anime_equirectangular-png_mysterious_forest_scene_with_311752495_12612630.png'} position-x={-2.5} rotation-y={Math.PI / 8} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='cactoro'>
+      <MonsterStage id='02' texture={'./textures/M3_Anime_equirectangular-png_mysterious_forest_scene_with_311752495_12612630.png'} position-x={-2.5} rotation-y={Math.PI / 8} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='cactoro'>
 
         <Cactoro scale={0.3} position-y={-1} hovered={hovered === 'cactoro'} />
       </MonsterStage>
 
 
-      <MonsterStage texture={'./textures/M3_Cinematic_Realism_equirectangular-png_stone_beach_in_the_658115739_12614691.png'} position-x={2.5} rotation-y={Math.PI / -8} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='dragon'>
+      <MonsterStage id='03' texture={'./textures/M3_Cinematic_Realism_equirectangular-png_stone_beach_in_the_658115739_12614691.png'} position-x={2.5} rotation-y={Math.PI / -8} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='dragon'>
 
         <Dragon_Evolved scale={0.4} position-y={-1} hovered={hovered === 'dragon'} />
       </MonsterStage>
-
 
 
     </>
@@ -62,6 +60,7 @@ export const Experience = () => {
 };
 
 const MonsterStage = ({
+  id,
   children,
   texture,
   name,
@@ -86,19 +85,23 @@ const MonsterStage = ({
       <RoundedBox
         name={name}
         args={[2, 3, 0.1]}
-        onDoubleClick={() => setActive(active === name ? null : name)}
+        onDoubleClick={(e) =>{ setActive(active === name ? null : name)}}
         onPointerEnter={() => setHovered(name)}
         onPointerLeave={() => setHovered(null)}
       >
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={1} />
           <Environment preset="sunset" />
+
           {children}
+
           <mesh>
             <sphereGeometry args={[5, 64, 64]} />
             <meshStandardMaterial map={map} side={THREE.BackSide} />
           </mesh>
+
         </MeshPortalMaterial>
+
       </RoundedBox>
     </group>
   );

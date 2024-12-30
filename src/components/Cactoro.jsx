@@ -28,6 +28,9 @@ export function Cactoro({ hovered, ...props }) {
     }
   }, [hovered, actions]);
 
+  
+
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group name="Scene">
