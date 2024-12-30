@@ -34,7 +34,6 @@ export const Experience = () => {
     <>
       <ambientLight intensity={0.5} />
 
-      <Environment preset="sunset"/>
       <CameraControls ref={controlsRef} />
 
       <MonsterStage id='01' texture={'./textures/M3_Photoreal_equirectangular-png_Mid_surface_view_looking_796725697_12612724.png'} active={active} setActive={setActive} hovered={hovered} setHovered={setHovered} name='fish'>
